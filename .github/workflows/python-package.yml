@@ -33,22 +33,24 @@ jobs:
         python -m pip install pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         
+    - name: Secret install
+      run: |
+        git clone https://github.com/sobolevn/git-secret.git git-secret
+        cd git-secret && sudo make build
+        PREFIX="/usr/local" sudo make install
+        cd ..
+        
     - name: Import GPG key
       id: import_gpg
       env:
         GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       run: | 
         echo $GPG_PRIVATE_KEY | tr ',' '\n' > ./private_key.gpg
-        
-        
-    - name: Secret reveal
-      run: |
         gpg --import ./private_key.gpg
-        pwd
-        git clone https://github.com/sobolevn/git-secret.git git-secret
-        cd git-secret && sudo make build
-        PREFIX="/usr/local" sudo make install
-        cd ..
+        
+    - name: Secret reveal 
+      run: |
+        git secret reveal
 
     - name: Test with pytest
       run: |
