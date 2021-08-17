@@ -39,11 +39,12 @@ jobs:
         GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       run: | 
         echo $GPG_PRIVATE_KEY | tr ',' '\n' > ./private_key.gpg
-        gpg --import ./private_key.gpg
+        
         
     - name: Secret reveal
       run: |
         sudo apt install git-secret
+        gpg --import ./private_key.gpg
         git secret reveal
 
     - name: Test with pytest
