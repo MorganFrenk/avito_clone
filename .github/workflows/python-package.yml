@@ -38,7 +38,7 @@ jobs:
       env:
         GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       run: | 
-        $(echo $GPG_PRIVATE_KEY | tr ',' '\n') > ./private_key.gpg 
+        echo $GPG_PRIVATE_KEY | tr ',' '\n' > ./private_key.gpg
         gpg --import ./private_key.gpg
         
     - name: Secret reveal
