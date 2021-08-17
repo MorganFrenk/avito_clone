@@ -43,8 +43,8 @@ jobs:
         
     - name: Secret reveal
       run: |
-        sudo apt install git-secret
         gpg --import ./private_key.gpg
+        sudo apt install git-secret
         git secret reveal
 
     - name: Test with pytest
