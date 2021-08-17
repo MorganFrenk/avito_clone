@@ -49,7 +49,6 @@ jobs:
         cd git-secret && sudo make build
         PREFIX="/usr/local" sudo make install
         cd ..
-        git secret reveal
 
     - name: Test with pytest
       run: |
